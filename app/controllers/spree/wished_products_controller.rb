@@ -1,5 +1,5 @@
 class Spree::WishedProductsController < Spree::StoreController
-  respond_to :html
+  respond_to :html, :js
 
   def create
     @wished_product = Spree::WishedProduct.new(wished_product_attributes)
@@ -12,7 +12,10 @@ class Spree::WishedProductsController < Spree::StoreController
       @wished_product.save
     end
 
+    flash.now[:notice] = Spree.t(:item_added_to_wishlist, name: @wished_product.name)
+
     respond_with(@wished_product) do |format|
+      format.js
       format.html { redirect_to wishlist_url(@wishlist) }
     end
   end

@@ -2,6 +2,8 @@ class Spree::WishedProduct < ActiveRecord::Base
   belongs_to :variant
   belongs_to :wishlist
 
+  delegate :name, to: :variant
+
   def total
     quantity * variant.price
   end
@@ -9,5 +11,4 @@ class Spree::WishedProduct < ActiveRecord::Base
   def display_total
     Spree::Money.new(total)
   end
-
 end
